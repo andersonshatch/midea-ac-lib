@@ -1,6 +1,10 @@
-## No more development
-Unfortunately I do not have access to my Midea Air Conditioners as I have relocated to a new house. This means that I cannot reliably support this library due to not being able to test it with real hardware anymore.
+This is an updated version of the library component only, from the repo at [NeoAcheron/midea-ac-py](https://github.com/NeoAcheron/midea-ac-py).
 
+So far, the only changes are to handle the session timeout properly. It should recover from an invalidated session or use of your account on another device.
+
+It is used by the home-assistant custom component at [andersonshatch/midea-ac-py](https://github.com/andersonshatch/midea-ac-py)
+
+Original Readme:
 # midea-ac-py 
 
 This is a library to allow communicating to a Midea AC via the Midea Cloud.
@@ -13,6 +17,3 @@ The reasons for me converting this to Python is that this library also serves as
 
 ## Wiki
 Please visit the Wiki for device support and instruction on how to use this component: https://github.com/NeoAcheron/midea-ac-py/wiki 
-
-## No more development
-Unfortunately I do not have access to my Midea Air Conditioners as I have relocated to a new house. This means that I cannot reliably support this library due to not being able to test it with real hardware anymore.
