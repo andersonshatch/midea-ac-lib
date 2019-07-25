@@ -51,6 +51,9 @@ class cloud:
         self._api_lock.acquire()
         response = {}
         try:
+            if endpoint == 'user/login' and self.session and self.login_id:^M
+                return self.session
+
             # Set up the initial data payload with the global variable set
             data = {
                 'appId': self.APP_ID,
@@ -198,6 +201,7 @@ class cloud:
             self.session = None
             self.get_login_id()
             self.login()
+            self.list()
 
         def session_restart():
             if(__debug__):
@@ -213,11 +217,12 @@ class cloud:
                 print("Error ignored: '{}' - '{}'".format(error_code, message))
 
         error_handlers = {
+            3101: restart_full,
             3176: ignore,          # The asyn reply does not exist.
             3106: session_restart,  # invalidSession.
             3144: restart_full,
             3004: session_restart,  # value is illegal.
-            9999: session_restart,  # system error.
+            9999: ignore,  # system error.
         }
 
         handler = error_handlers.get(error_code, throw)
