@@ -6,13 +6,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
      name='midea',  
-     version='0.1.7',
-     author="NeoAcheron",
-     author_email="master@neoacheron.com",
+     version='0.1.8',
+     author="NeoAcheron, andersonshatch",
+     author_email="master@neoacheron.com, hello@andersonshatch.com",
      description="A library to control Midea appliances via the cloud API",
      long_description=long_description,
-   long_description_content_type="text/markdown",
-     url="https://github.com/NeoAcheron/midea-ac-py",
+     long_description_content_type="text/markdown",
+     url="https://github.com/andersonshatch/midea-ac-lib",
      packages=setuptools.find_packages(),
      classifiers=[
          "Programming Language :: Python :: 3",
