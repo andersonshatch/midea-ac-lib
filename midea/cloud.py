@@ -51,7 +51,7 @@ class cloud:
         self._api_lock.acquire()
         response = {}
         try:
-            if endpoint == 'user/login' and self.session and self.login_id:^M
+            if endpoint == 'user/login' and self.session and self.login_id:
                 return self.session
 
             # Set up the initial data payload with the global variable set
