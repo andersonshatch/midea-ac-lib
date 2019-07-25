@@ -5,8 +5,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-     name='midea',  
-     version='0.1.8',
+     name='midea-andersonshatch',  
+     version='0.1.9',
      author="NeoAcheron, andersonshatch",
      author_email="master@neoacheron.com, hello@andersonshatch.com",
      description="A library to control Midea appliances via the cloud API",
