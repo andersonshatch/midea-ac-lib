@@ -2,7 +2,7 @@ import logging
 
 import midea.crc8 as crc8
 
-VERSION = '0.1.7'
+VERSION = '0.1.11'
 
 _LOGGER = logging.getLogger(__name__)
 
