@@ -1,6 +1,7 @@
 import requests
 import datetime
 import json
+import logging
 
 from threading import Lock
 
@@ -11,6 +12,7 @@ from midea.security import security
 
 VERSION = '0.1.7'
 
+_LOGGER = logging.getLogger(__name__)
 
 class cloud:
     SERVER_URL = "https://mapp.appsmb.com/v1/"
@@ -85,8 +87,7 @@ class cloud:
         if response['errorCode'] != '0':
             self.handle_api_error(int(response['errorCode']), response['msg'])
             # If you don't throw, then retry
-            if(__debug__):
-                print("Retrying API call: '{}'".format(endpoint))
+            _LOGGER.debug("Retrying API call: '{}'".format(endpoint))
             self._retries += 1
             if(self._retries < 3):
                 return self.api_request(endpoint, args)
@@ -139,8 +140,7 @@ class cloud:
         })
 
         self.appliance_list = response['list']
-        if(__debug__):
-            print("Device list: {}".format(self.appliance_list))
+        _LOGGER.debug("Device list: {}".format(self.appliance_list))
         return self.appliance_list
 
     def encode(self, data: bytearray):
@@ -164,8 +164,7 @@ class cloud:
         if not self.session:
             self.login()
 
-        if(__debug__):
-            print("Sending to {}: {}".format(id, data.hex()))
+        _LOGGER.debug("Sending to {}: {}".format(id, data.hex()))
         encoded = self.encode(data)
         order = self.security.aes_encrypt(encoded)
         response = self.api_request('appliance/transparent/send', {
@@ -177,8 +176,7 @@ class cloud:
         reply = self.decode(self.security.aes_decrypt(
             bytearray.fromhex(response['reply'])))
 
-        if(__debug__):
-            print("Recieved from {}: {}".format(id, reply.hex()))
+        _LOGGER.debug("Recieved from {}: {}".format(id, reply.hex()))
         return reply
 
     def list_homegroups(self, force_update=False):
@@ -196,16 +194,14 @@ class cloud:
     def handle_api_error(self, error_code, message: str):
 
         def restart_full():
-            if(__debug__):
-                print("Restarting full: '{}' - '{}'".format(error_code, message))
+            _LOGGER.debug("Restarting full: '{}' - '{}'".format(error_code, message))
             self.session = None
             self.get_login_id()
             self.login()
             self.list()
 
         def session_restart():
-            if(__debug__):
-                print("Restarting session: '{}' - '{}'".format(error_code, message))
+            _LOGGER.debug("Restarting session: '{}' - '{}'".format(error_code, message))
             self.session = None
             self.login()
 
@@ -213,8 +209,7 @@ class cloud:
             raise ValueError(error_code, message)
 
         def ignore():
-            if(__debug__):
-                print("Error ignored: '{}' - '{}'".format(error_code, message))
+            _LOGGER.debug("Error ignored: '{}' - '{}'".format(error_code, message))
 
         error_handlers = {
             3101: restart_full,
