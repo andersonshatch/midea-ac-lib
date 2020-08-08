@@ -78,7 +78,7 @@ class cloud:
 
             # POST the endpoint with the payload
             r = requests.post(url=url, data=data, timeout=9)
-            r.raise_for_status())
+            r.raise_for_status()
 
             response = json.loads(r.text)
         finally:
